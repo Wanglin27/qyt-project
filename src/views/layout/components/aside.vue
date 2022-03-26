@@ -2,11 +2,12 @@
 <!-- el-menu-item 的 index 不能重复 确保唯一即可 -->
     <el-menu
     class="nav-menu"
-      default-active="/"
+      :default-active="$route.path"
       background-color="#002033"
       text-color="#fff"
       active-text-color="#ffd04b"
-      router>
+      router
+      :collapse="isCollapse">
       <el-menu-item index="/">
         <i class="el-icon-s-home"></i>
         <span slot="title">首页</span>
@@ -40,7 +41,13 @@
 
 <script>
 export default {
-  name: 'AppAside'
+  name: 'AppAside',
+  props: ['is-collapse'],
+  data () {
+    return {
+      // isCollapse: true
+    }
+  }
 }
 </script>
 

@@ -7,7 +7,7 @@
 
     <div class="login-form-wrap">
       <div class="login-head">
-        <div class="logo"></div>
+        <div class="logo">爱你王木木</div>
       </div>
       <!--
         配置Form表单验证
@@ -82,6 +82,7 @@ export default {
           // 验证通过：callback（）
           // 验证失败：callback（new Error('错误信息')）
           {
+            // validator 验证函数不是你来调用的 而是当element表单触发验证的时候他会自己调用
             validator: (rule, value, callback) => {
               if (value) {
                 callback()
@@ -111,17 +112,15 @@ export default {
           return
         }
         // 验证通过，提交登录
-        this.login()
+        this.Login()
       })
     },
-    login () {
+    Login () {
       // 开启登陆中 loading...
       this.loginLoading = true
 
       login(this.user)
         .then(res => {
-          console.log(res)
-
           // 登录成功
           this.$message({
             message: '登录成功',
@@ -129,10 +128,15 @@ export default {
           })
           // 关闭 loading
           this.loginLoading = false
-          // 跳转到首页
+          // 将接口返回的用户相关的数据放到本地存储 方便应用数据
+          // 本地存储只能存储字符串
+          // 如果需要存储对象 数组类型的数据 则将他们转为JSON格式字符串
+          window.localStorage.setItem('user', JSON.stringify(res.data.data))
+          // 登陆成功跳转到首页
           this.$router.push({
             name: 'home'
           })
+          location.reload()
         })
         .catch(err => {
           // 登录失败
@@ -170,7 +174,10 @@ export default {
       .logo {
         width: 200px;
         height: 57px;
-        background: url('./logo_index.png') no-repeat;
+        text-align: center;
+        font-size: 40px;
+        color: skyblue;
+        margin-bottom: 6px;
         background-size: contain;
       }
     }

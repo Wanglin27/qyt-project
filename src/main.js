@@ -13,6 +13,8 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 new Vue({
+  // 配置项
   router,
   render: h => h(App)
 }).$mount('#app')
+// $mount()是vue实例的一个方法 可以绑定你要操作的容器div。  el: '#app'
